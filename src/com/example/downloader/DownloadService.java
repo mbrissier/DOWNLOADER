@@ -1,6 +1,7 @@
 package com.example.downloader;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,18 +12,37 @@ import java.net.URLConnection;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.ResultReceiver;
 
 public class DownloadService extends IntentService {
-    public static final int UPDATE_PROGRESS = 8344;
+    public 	static final int UPDATE_PROGRESS = 8344;
+    public 	static final String URL
+    	= "url";
+    public 	static final String RECEIVER
+		= "receiver";
+    private static final int	BUFFERSIZE
+		= 1024;
+    private static final String STORAGENOTWRITABLE
+		= "external storage is not accessable or not writable";
     public DownloadService() {
         super("DownloadService");
     }
     
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+    
     @Override
     protected void onHandleIntent(Intent intent) {
-        String urlToDownload = intent.getStringExtra("url");
-        ResultReceiver receiver = (ResultReceiver) intent.getParcelableExtra("receiver");
+        String	 		urlToDownload 	= intent.getStringExtra(URL);
+        ResultReceiver	receiver 		= (ResultReceiver) intent.getParcelableExtra(RECEIVER);
+        
         try {
             URL url = new URL(urlToDownload);
             URLConnection connection = url.openConnection();
@@ -32,16 +52,19 @@ public class DownloadService extends IntentService {
 
             // download the file
             InputStream input = new BufferedInputStream(url.openStream());
-            OutputStream output = new FileOutputStream("/mnt/sdcard/test");
+            if(!isExternalStorageWritable())	throw new RuntimeException(STORAGENOTWRITABLE);
+            OutputStream output = new FileOutputStream
+            					 (new File(Environment.getExternalStoragePublicDirectory
+            					 (Environment.DIRECTORY_PICTURES), url.toString()));
 
-            byte data[] = new byte[1024];
+            byte data[] = new byte[BUFFERSIZE];
             long total = 0;
             int count;
             while ((count = input.read(data)) != -1) {
                 total += count;
                 // publishing the progress....
                 Bundle resultData = new Bundle();
-                resultData.putInt("progress" ,(int) (total * 100 / fileLength));
+                resultData.putInt(DownloadReceiver.PROGRESS ,(int) (total * DownloadReceiver.FINISHED / fileLength));
                 receiver.send(UPDATE_PROGRESS, resultData);
                 output.write(data, 0, count);
             }
@@ -51,10 +74,12 @@ public class DownloadService extends IntentService {
             input.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (RuntimeException e) {
+        	e.printStackTrace();
         }
 
         Bundle resultData = new Bundle();
-        resultData.putInt("progress" ,100);
+        resultData.putInt(DownloadReceiver.PROGRESS, DownloadReceiver.FINISHED);
         receiver.send(UPDATE_PROGRESS, resultData);
     }
 }
