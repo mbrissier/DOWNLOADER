@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class Downloader extends Activity {
 
@@ -27,7 +28,7 @@ public class Downloader extends Activity {
 	
 	private static final String DEFAULTURL
 		= "https://www.ironmanmagazine.com/articles/6311-Watch-Arnold-Train.pdf";
-
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class Downloader extends Activity {
 		return true;
 
 	}
-
+	
 	OnClickListener downloadListener = new OnClickListener() {
 		public void onClick(View v) {
 			progressBar = new ProgressDialog(v.getContext());

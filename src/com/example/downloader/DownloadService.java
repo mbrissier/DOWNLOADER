@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.ResultReceiver;
+import android.widget.Toast;
 
 public class DownloadService extends IntentService {
     public 	static final int UPDATE_PROGRESS = 8344;
@@ -23,6 +24,8 @@ public class DownloadService extends IntentService {
 		= "receiver";
     private static final int	BUFFERSIZE
 		= 1024;
+    public static final String TOAST
+		= "Download abgeschlossen";
     private static final String STORAGENOTWRITABLE
 		= "external storage is not accessable or not writable";
     public DownloadService() {
@@ -80,6 +83,7 @@ public class DownloadService extends IntentService {
 
         Bundle resultData = new Bundle();
         resultData.putInt(DownloadReceiver.PROGRESS, DownloadReceiver.FINISHED);
+        Toast.makeText(this, TOAST, Toast.LENGTH_LONG).show();
         receiver.send(UPDATE_PROGRESS, resultData);
     }
 }

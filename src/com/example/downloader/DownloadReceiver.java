@@ -3,6 +3,7 @@ package com.example.downloader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.widget.Toast;
 
 class DownloadReceiver extends ResultReceiver {
 	public static final String PROGRESS
@@ -22,7 +23,7 @@ class DownloadReceiver extends ResultReceiver {
             
             Downloader.progressBar.setProgress(progress);
             if (progress == FINISHED) {
-               Downloader.progressBar.dismiss();  
+               Downloader.progressBar.dismiss(); 
             }
         }
     }
