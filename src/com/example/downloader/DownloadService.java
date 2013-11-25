@@ -24,10 +24,10 @@ public class DownloadService extends IntentService {
 		= "receiver";
     private static final int	BUFFERSIZE
 		= 1024;
-    public static final String TOAST
-		= "Download abgeschlossen";
     private static final String STORAGENOTWRITABLE
 		= "external storage is not accessable or not writable";
+    
+    
     public DownloadService() {
         super("DownloadService");
     }
@@ -83,7 +83,7 @@ public class DownloadService extends IntentService {
 
         Bundle resultData = new Bundle();
         resultData.putInt(DownloadReceiver.PROGRESS, DownloadReceiver.FINISHED);
-        Toast.makeText(this, TOAST, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.finished_toast), Toast.LENGTH_LONG).show();
         receiver.send(UPDATE_PROGRESS, resultData);
     }
 }

@@ -7,5 +7,9 @@
     <string name="description">FILE URL:</string>
     <string name="download">Download</string>
     <string name="progressbar_message">File downloading ...</string>
+    <string name="standard_url">https://www.ironmanmagazine.com/articles/6311-Watch-Arnold-Train.pdf</string>
+    
+    <!--Toasts-->
+    <string name="finished_toast">Download abgeschlossen</string>
 
 </resources>

@@ -26,9 +26,6 @@ public class Downloader extends Activity {
 	
 	protected static ProgressDialog progressBar;
 	
-	private static final String DEFAULTURL
-		= "https://www.ironmanmagazine.com/articles/6311-Watch-Arnold-Train.pdf";
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,7 @@ public class Downloader extends Activity {
 		button_download.setOnClickListener(downloadListener);
 		progressBar_download 	= (ProgressBar) findViewById(R.id.progressBar_download);
 		editText_url 			= (EditText) 	findViewById(R.id.editText_url);
-		editText_url.setText(DEFAULTURL);
+		editText_url.setText(getResources().getString(R.string.standard_url));
 	}
 
 	@Override
