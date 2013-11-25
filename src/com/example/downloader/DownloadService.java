@@ -17,7 +17,8 @@ import android.os.ResultReceiver;
 import android.widget.Toast;
 
 public class DownloadService extends IntentService {
-    public 	static final int UPDATE_PROGRESS = 8344;
+    public 	static final int 	UPDATE_PROGRESS 
+    	= 8344;
     public 	static final String URL
     	= "url";
     public 	static final String RECEIVER
@@ -47,8 +48,8 @@ public class DownloadService extends IntentService {
         ResultReceiver	receiver 		= (ResultReceiver) intent.getParcelableExtra(RECEIVER);
         
         try {
-            URL url = new URL(urlToDownload);
-            URLConnection connection = url.openConnection();
+            URL 			url 		= new URL(urlToDownload);
+            URLConnection 	connection 	= url.openConnection();
             connection.connect();
             // this will be useful so that you can show a typical 0-100% progress bar
             int fileLength = connection.getContentLength();
@@ -60,9 +61,9 @@ public class DownloadService extends IntentService {
             					 (new File(Environment.getExternalStoragePublicDirectory
             					 (Environment.DIRECTORY_PICTURES), url.toString()));
 
-            byte data[] = new byte[BUFFERSIZE];
-            long total = 0;
-            int count;
+            byte 	data[] 	= new byte[BUFFERSIZE];
+            long 	total 	= 0;
+            int 	count;
             while ((count = input.read(data)) != -1) {
                 total += count;
                 // publishing the progress....

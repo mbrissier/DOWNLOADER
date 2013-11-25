@@ -13,12 +13,11 @@ import android.widget.EditText;
 
 public class Downloader extends Activity {
 
-	private Button 		button_download;
-	private EditText 	editText_url;
+	private 			Button 			button_download;
+	private 			EditText 		editText_url;
 	
-	protected static ProgressDialog progressBar;
+	protected static 	ProgressDialog 	progressBar;
 	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,8 +53,5 @@ public class Downloader extends Activity {
 			startService(intent);
 		}
 	};
-
-	
-	
 }
 
