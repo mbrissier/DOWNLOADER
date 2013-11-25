@@ -1,10 +1,5 @@
 package com.example.downloader;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
@@ -15,13 +10,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 public class Downloader extends Activity {
 
 	private Button 		button_download;
-	private ProgressBar progressBar_download;
 	private EditText 	editText_url;
 	
 	protected static ProgressDialog progressBar;
@@ -34,7 +26,6 @@ public class Downloader extends Activity {
 
 		button_download 		= (Button) 		findViewById(R.id.button_download);
 		button_download.setOnClickListener(downloadListener);
-		progressBar_download 	= (ProgressBar) findViewById(R.id.progressBar_download);
 		editText_url 			= (EditText) 	findViewById(R.id.editText_url);
 		editText_url.setText(getResources().getString(R.string.standard_url));
 	}
