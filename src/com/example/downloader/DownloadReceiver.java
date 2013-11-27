@@ -4,11 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
-import android.widget.Toast;
 
 class DownloadReceiver extends ResultReceiver {
-	public static final String PROGRESS = "progress";
-	public static final int FINISHED = 100;
+	public static final String 	PROGRESS = "progress";
+	public static final int 	FINISHED = 100;
 
 	public DownloadReceiver(Handler handler) {
 		super(handler);

@@ -6,10 +6,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="description">FILE URL:</string>
     <string name="download">Download</string>
-    <string name="progressbar_message">File downloading ...</string>
-    <string name="standard_url">"http://ftp.tu-clausthal.de/pub/mirror/ubuntu/releases//saucy/ubuntu-13.10-server-amd64.iso"</string>
-    
+    <string name="standard_url">http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/technology/epp/downloads/release/kepler/SR1/eclipse-standard-kepler-SR1-macosx-cocoa-x86_64.tar.gz</string>
+    <!-- http://ftp.tu-clausthal.de/pub/mirror/ubuntu/releases//saucy/ubuntu-13.10-server-amd64.iso -->
     <!--Toasts-->
     <string name="finished_toast">Download abgeschlossen</string>
+    <string name="inet_toast">Keine Internetverbindung!</string>
+    <string name="downloading_toast">File downloading&#8230;</string>
 
 </resources>

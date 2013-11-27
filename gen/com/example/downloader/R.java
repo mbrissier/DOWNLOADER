@@ -41,12 +41,14 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int description=0x7f050003;
         public static final int download=0x7f050004;
-        /** Toasts
+        public static final int downloading_toast=0x7f050008;
+        /**  http://ftp.tu-clausthal.de/pub/mirror/ubuntu/releases//saucy/ubuntu-13.10-server-amd64.iso 
+Toasts
          */
-        public static final int finished_toast=0x7f050007;
+        public static final int finished_toast=0x7f050006;
         public static final int hello_world=0x7f050002;
-        public static final int progressbar_message=0x7f050005;
-        public static final int standard_url=0x7f050006;
+        public static final int inet_toast=0x7f050007;
+        public static final int standard_url=0x7f050005;
     }
     public static final class style {
         /** 

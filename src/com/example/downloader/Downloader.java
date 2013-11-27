@@ -16,10 +16,10 @@ import android.widget.Toast;
 
 public class Downloader extends Activity {
 
-	private Button button_download;
-	private EditText editText_url;
+	private 			Button 		button_download;
+	private 			EditText 	editText_url;
 
-	protected static ProgressBar progressBar;
+	protected static 	ProgressBar progressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,10 @@ public class Downloader extends Activity {
 
 		button_download = (Button) findViewById(R.id.button_download);
 		button_download.setOnClickListener(downloadListener);
+		
 		editText_url = (EditText) findViewById(R.id.editText_url);
 		editText_url.setText(getResources().getString(R.string.standard_url));
+		
 		progressBar = (ProgressBar) findViewById(R.id.progressBar_download);
 	}
 
@@ -51,7 +53,7 @@ public class Downloader extends Activity {
 			} else {
 
 				progressBar.setProgress(0);
-				Toast.makeText(Downloader.this, "Keine Internetverbindung!",
+				Toast.makeText(Downloader.this, getResources().getString(R.string.inet_toast),
 						Toast.LENGTH_LONG).show();
 
 			}
@@ -61,8 +63,8 @@ public class Downloader extends Activity {
 	;
 
 	public boolean isOnline() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		ConnectivityManager cm 		= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo 		netInfo = cm.getActiveNetworkInfo();
 		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
 			return true;
 		}

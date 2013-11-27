@@ -10,23 +10,21 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.widget.Toast;
 
 public class DownloadService extends IntentService {
-        public static final int UPDATE_PROGRESS = 8044;
-        public static final String URL = "url";
-        public static final String RECEIVER = "receiver";
-        public static final String DES = "/mnt/sdcard/test/test.iso";
-        private static final int BUFFERSIZE = 1024;
-        public static final String TOAST = "Download abgeschlossen";
+        public 	static final int 		UPDATE_PROGRESS = 8044;
+        public 	static final String 	URL 			= "url";
+        public 	static final String 	RECEIVER 		= "receiver";
+        public 	static final String 	EXTSTO 			= "external storage not available";
+        private static final int 		BUFFERSIZE 		= 1024;
+        private				 Handler	handler;
         
 
         public DownloadService() {
@@ -37,13 +35,12 @@ public class DownloadService extends IntentService {
         
         @Override
         protected void onHandleIntent(Intent intent) {
-                String urlToDownload = intent.getStringExtra(URL);
-                ResultReceiver receiver = (ResultReceiver) intent
+                String 			urlToDownload 	= intent.getStringExtra(URL);
+                ResultReceiver 	receiver 		= (ResultReceiver) intent
                                 .getParcelableExtra(RECEIVER);
-
                 try {
-                        URL url = new URL(urlToDownload);
-                        URLConnection connection = url.openConnection();
+                        URL 			url 		= new URL(urlToDownload);
+                        URLConnection 	connection 	= url.openConnection();
                         connection.connect();
                         // this will be useful so that you can show a typical 0-100%
                         // progress bar
@@ -52,12 +49,22 @@ public class DownloadService extends IntentService {
                         // download the file
                         InputStream input = new BufferedInputStream(url.openStream());
                         // save file
-                        OutputStream output = new FileOutputStream(DES);
+                        
+                        if(!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                        	|| Environment.MEDIA_MOUNTED_READ_ONLY.equals(Environment.getExternalStorageState()))
+                        	throw new RuntimeException(EXTSTO);
+                        OutputStream output = new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "test.iso"));
+                        
+                        handler.post(new Runnable(){
+                        	public void run(){
+                        		Toast.makeText(getApplicationContext(), getResources().getString(R.string.downloading_toast), Toast.LENGTH_LONG).show();
+                        	}
+                        });
                         
                         //get status of download and pass it to Downloader.progressBar via DownloadReceiver
                         byte data[] = new byte[BUFFERSIZE];
-                        long total = 0;
-                        int count;
+                        long total 	= 0;
+                        int  count;
                         while ((count = input.read(data)) != -1) {
                                 total += count;
                                 // publishing the progress....
@@ -79,14 +86,21 @@ public class DownloadService extends IntentService {
 
                 Bundle resultData = new Bundle();
                 resultData.putInt(DownloadReceiver.PROGRESS, DownloadReceiver.FINISHED);
-                makeToast();
+                handler.post(new Runnable(){
+                	public void run(){
+                		Toast.makeText(getApplicationContext(), getResources().getString(R.string.finished_toast), Toast.LENGTH_LONG).show();
+                	}
+                });
                 receiver.send(UPDATE_PROGRESS, resultData);
         }
-        
-        public void makeToast() {
-                
-		Toast.makeText(this, TOAST, Toast.LENGTH_LONG).show();
-        }
-        
+
+
+
+		@Override
+		public int onStartCommand(Intent intent, int flags, int startId) {
+			// TODO Auto-generated method stub
+			handler = new Handler();
+			return super.onStartCommand(intent, flags, startId);	
+		}  
         
 }
